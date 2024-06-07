@@ -99,6 +99,7 @@ function initWorkerThreadsWorker() {
             const resolvedScriptPath = options && options.fromSource
                 ? null
                 : resolveScriptPath(scriptPath, (options || {})._baseURL);
+            console.log('resolved script path = ' + resolveScriptPath);
             if (!resolvedScriptPath) {
                 // `options.fromSource` is true
                 const sourceCode = scriptPath;
@@ -220,7 +221,9 @@ let isTinyWorker;
 function selectWorkerImplementation() {
     try {
         isTinyWorker = false;
-        return initWorkerThreadsWorker();
+        const worker =  initWorkerThreadsWorker();
+        console.log('is native worker');
+        return worker;
     }
     catch (error) {
         // tslint:disable-next-line no-console

@@ -29,6 +29,7 @@ exports.isWorkerRuntime = exports.getWorkerImplementation = exports.defaultPoolS
 const BrowserImplementation = __importStar(require("./implementation.browser"));
 const NodeImplementation = __importStar(require("./implementation.node"));
 const runningInNode = typeof process !== 'undefined' && process.arch !== 'browser' && 'pid' in process;
+console.log('running in node = ' + runningInNode);
 const implementation = runningInNode ? NodeImplementation : BrowserImplementation;
 /** Default size of pools. Depending on the platform the value might vary from device to device. */
 exports.defaultPoolSize = implementation.defaultPoolSize;

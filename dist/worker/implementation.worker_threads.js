@@ -14,6 +14,8 @@ const isWorkerRuntime = function isWorkerRuntime() {
     return !worker_threads_1.default().isMainThread;
 };
 const postMessageToMaster = function postMessageToMaster(data, transferList) {
+
+    console.log('parent port ' + worker_threads_1.default().parentPort);
     assertMessagePort(worker_threads_1.default().parentPort).postMessage(data, transferList);
 };
 const subscribeToMasterMessages = function subscribeToMasterMessages(onMessage) {

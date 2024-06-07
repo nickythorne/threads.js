@@ -17,6 +17,7 @@ function selectNodeImplementation() {
         return implementation_worker_threads_1.default;
     }
     catch (error) {
+        console.log('caught error = ' + error?.message);
         return implementation_tiny_worker_1.default;
     }
 }

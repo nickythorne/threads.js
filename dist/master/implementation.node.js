@@ -85,7 +85,7 @@ function resolveScriptPath(scriptPath, baseURL) {
     };
     const workerFilePath = typeof __non_webpack_require__ === "function"
         ? __non_webpack_require__.resolve(makeRelative(scriptPath))
-        : eval("require").resolve(makeRelative(scriptPath));
+        : eval("require").resolve(makeRelative(rebaseScriptPath(scriptPath, /[\/\\]worker_threads[\/\\]/)));
     return workerFilePath;
 }
 function initWorkerThreadsWorker() {

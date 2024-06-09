@@ -94,7 +94,7 @@ function initWorkerThreadsWorker() {
         ? __non_webpack_require__("worker_threads").Worker
         : eval("require")("worker_threads").Worker;
 
-     console.log('native worker check = ' + typeof __non_webpack_require__ === "function");   
+     console.log(`native worker check = ${typeof __non_webpack_require__ === "function"}`);   
     let allWorkers = [];
     class Worker extends NativeWorker {
         constructor(scriptPath, options) {
@@ -125,6 +125,14 @@ function initWorkerThreadsWorker() {
                 super(resolvedScriptPath, options);
 
             }
+            this.on("error", (error) => {
+                console.log(`ERROR received = ${error.message}`)
+            });
+
+            this.on("exit", (message) => {
+                console.log(`Exit received = ${message}`)
+            });
+
             this.mappedEventListeners = new WeakMap();
             allWorkers.push(this);
         }

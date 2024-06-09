@@ -101,7 +101,7 @@ function initWorkerThreadsWorker() {
             const resolvedScriptPath = options && options.fromSource
                 ? null
                 : resolveScriptPath(scriptPath, (options || {})._baseURL);
-                console.log('resolved script path = ' + resolveScriptPath);
+                console.log('resolved script path = ' + resolvedScriptPath);
             if (!resolvedScriptPath) {
                 // `options.fromSource` is true
                 console.log('1');

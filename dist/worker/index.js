@@ -158,18 +158,12 @@ function expose(exposed) {
         postFunctionInitMessage();
     }
     else if (typeof exposed === "object" && exposed) {
-        console.log('in object expose')
         implementation_1.default.subscribeToMasterMessages(messageData => {
-            console.log('subscribe to master messages = ' + messageData);
-
-            console.log('isMasterJobRunMessage = ' + isMasterJobRunMessage(messageData));
             if (isMasterJobRunMessage(messageData) && messageData.method) {
-                console.log('running function');
                 runFunction(messageData.uid, exposed[messageData.method], messageData.args.map(common_1.deserialize));
             }
         });
         const methodNames = Object.keys(exposed).filter(key => typeof exposed[key] === "function");
-        console.log('method names = ' + methodNames);
         postModuleInitMessage(methodNames);
     }
     else {

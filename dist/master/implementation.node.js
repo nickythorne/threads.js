@@ -94,33 +94,27 @@ function initWorkerThreadsWorker() {
         ? __non_webpack_require__("worker_threads").Worker
         : eval("require")("worker_threads").Worker;
 
-     console.log(`native worker check = ${typeof __non_webpack_require__ === "function"}`);   
     let allWorkers = [];
     class Worker extends NativeWorker {
         constructor(scriptPath, options) {
             const resolvedScriptPath = options && options.fromSource
                 ? null
                 : resolveScriptPath(scriptPath, (options || {})._baseURL);
-                console.log('resolved script path = ' + resolvedScriptPath);
             if (!resolvedScriptPath) {
                 // `options.fromSource` is true
-                console.log('1');
                 const sourceCode = scriptPath;
                 super(sourceCode, Object.assign(Object.assign({}, options), { eval: true }));
             }
             else if (resolvedScriptPath.match(/\.tsx?$/i) && detectTsNode()) {
-                console.log('2');
 
                 super(createTsNodeModule(resolvedScriptPath), Object.assign(Object.assign({}, options), { eval: true }));
             }
             else if (resolvedScriptPath.match(/\.asar[\/\\]/)) {
-                console.log('3');
 
                 // See <https://github.com/andywer/threads-plugin/issues/17>
                 super(resolvedScriptPath.replace(/\.asar([\/\\])/, ".asar.unpacked$1"), options);
             }
             else {
-                console.log('4');
 
                 super(resolvedScriptPath, options);
 
@@ -149,7 +143,6 @@ function initWorkerThreadsWorker() {
         }
     }
     const terminateWorkersAndMaster = () => {
-        console.log('in terminate workers and master')
         // we should terminate all workers and then gracefully shutdown self process
         Promise.all(allWorkers.map(worker => worker.terminate())).then(() => process.exit(0), () => process.exit(1));
         allWorkers = [];
@@ -240,7 +233,6 @@ let isTinyWorker;
 function selectWorkerImplementation() {
     try {
         isTinyWorker = false;
-        console.log('init worker threads worker ');
         return initWorkerThreadsWorker();
     }
     catch (error) {
